@@ -7,9 +7,20 @@ import LoadingBar from 'react-top-loading-bar'
 
 const App = ()=> {
   const pageSize = 6;
-  const apiKey = process.env.REACT_APP_NEWS_API
-
+  const apiKey = process.env.REACT_APP_NEWS_API || "";
   const [progress, setProgress] = useState(0)
+
+  if (!apiKey) {
+    return (
+      <div className="container my-5">
+        <div className="alert alert-danger" role="alert">
+          Missing News API key. Create a <code>.env</code> file in the project root with:
+          <pre>REACT_APP_NEWS_API=your_newsapi_key_here</pre>
+          Then restart the development server.
+        </div>
+      </div>
+    )
+  }
 
     return (
       <div>
