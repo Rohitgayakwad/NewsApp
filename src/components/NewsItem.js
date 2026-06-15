@@ -2,6 +2,12 @@ import React from 'react'
 
 const NewsItem = (props)=> {
         let { title, description, imageUrl, newsUrl, author, date, source } = props;
+        const fallbackImage = "https://dummyimage.com/300x225/cccccc/969696?text=No+Image";
+        
+        const handleImageError = (e) => {
+            e.target.src = fallbackImage;
+        }
+
         return (
             <div className="my-3">
                 <div className="card">
@@ -13,7 +19,7 @@ const NewsItem = (props)=> {
                     }}>
                         <span className="badge rounded-pill bg-success">{source}</span>
                     </div>
-                    <img src={!imageUrl ? "https://aeroclub-issoire.fr/wp-content/uploads/2020/05/image-not-found-300x225.jpg" : imageUrl} className="card-img-top" alt="..." />
+                    <img src={imageUrl || fallbackImage} onError={handleImageError} className="card-img-top" alt="News" />
                     <div className="card-body">
                         <h5 className="card-title">{title}</h5>
                         <p className="card-text">{description}...</p>

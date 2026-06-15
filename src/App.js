@@ -39,6 +39,7 @@ const App = ()=> {
             <Route exact path="/science" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="science" pageSize={pageSize} country="in" category="science" />}></Route>
             <Route exact path="/sports" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="sports" pageSize={pageSize} country="in" category="sports" />}></Route>
             <Route exact path="/technology" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="technology" pageSize={pageSize} country="in" category="technology" />}></Route>
+            <Route exact path="/search" element={<News setProgress = {setProgress} apiKey = {apiKey} key="search" pageSize={pageSize} country="in" category="general" />}></Route>
           </Routes>
         </Router>
       </div>
