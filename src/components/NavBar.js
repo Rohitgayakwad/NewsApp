@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const NavBar = ()=> {
     const [query, setQuery] = useState('')
     const navigate = useNavigate()
+    const collapseRef = useRef(null)
+    const toggleRef = useRef(null)
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -11,18 +13,37 @@ const NavBar = ()=> {
         if (trimmed) {
             navigate(`/search?q=${encodeURIComponent(trimmed)}`)
             setQuery('')
+            // Close navbar on mobile after search
+            if (collapseRef.current?.classList.contains('show') && toggleRef.current) {
+                toggleRef.current.click()
+            }
         }
     }
+
+    useEffect(() => {
+        const handleDocumentClick = (event) => {
+            const collapseEl = collapseRef.current
+            const toggleEl = toggleRef.current
+            if (!collapseEl || !toggleEl) return
+
+            if (collapseEl.classList.contains('show') && !collapseEl.contains(event.target) && !toggleEl.contains(event.target)) {
+                toggleEl.click()
+            }
+        }
+
+        document.addEventListener('click', handleDocumentClick)
+        return () => document.removeEventListener('click', handleDocumentClick)
+    }, [])
 
     return (
         <div>
             <nav className="navbar fixed-top navbar-expand-lg" style={{ backgroundColor: "#6f42c1" }} data-bs-theme="light">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/" style={{ color: "white" }}>NewsWeb</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button ref={toggleRef} className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div ref={collapseRef} className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item"><Link className="nav-link" aria-current="page" to="/" style={{ color: "white" }}>Home</Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/business" style={{ color: "white" }}>Business</Link></li>

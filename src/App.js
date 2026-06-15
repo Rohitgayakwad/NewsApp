@@ -14,14 +14,6 @@ const App = ()=> {
       <div>
         <Router>
           <NavBar />
-          { !apiKey && (
-            <div className="container my-2">
-              <div className="alert alert-warning" role="alert">
-                No client API key detected. The app will attempt to use a server proxy at <code>/api/fetchNews</code>. For direct client access set <code>REACT_APP_NEWS_API</code>.
-              </div>
-            </div>
-          )}
-
           <LoadingBar
             height={3}
             color='#f11946'
