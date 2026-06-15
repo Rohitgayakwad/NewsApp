@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 app.get('/api/fetchNews', async (req, res) => {
   try {
     const { searchQuery, category, country, pageSize, page } = req.query;
-    const apiKey = process.env.REACT_APP_NEWS_API;
+    const apiKey = process.env.NEWS_API_KEY;
     if (!apiKey) {
       return res.status(500).json({ status: 'error', message: 'Server missing API key' });
     }
