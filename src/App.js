@@ -10,36 +10,32 @@ const App = ()=> {
   const apiKey = process.env.REACT_APP_NEWS_API || "";
   const [progress, setProgress] = useState(0)
 
-  if (!apiKey) {
-    return (
-      <div className="container my-5">
-        <div className="alert alert-danger" role="alert">
-          Missing News API key. Create a <code>.env</code> file in the project root with:
-          <pre>REACT_APP_NEWS_API=your_newsapi_key_here</pre>
-          Then restart the development server.
-        </div>
-      </div>
-    )
-  }
-
     return (
       <div>
         <Router>
           <NavBar />
+          { !apiKey && (
+            <div className="container my-2">
+              <div className="alert alert-warning" role="alert">
+                No client API key detected. The app will attempt to use a server proxy at <code>/api/fetchNews</code>. For direct client access set <code>REACT_APP_NEWS_API</code>.
+              </div>
+            </div>
+          )}
+
           <LoadingBar
             height={3}
             color='#f11946'
             progress={progress}
           />
           <Routes>
-            <Route exact path="/" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="general" pageSize={pageSize} country="in" category="general" />}></Route>
-            <Route exact path="/business" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="business" pageSize={pageSize} country="in" category="business" />}></Route>
-            <Route exact path="/entertainment" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="entertainment" pageSize={pageSize} country="in" category="entertainment" />}></Route>
-            <Route exact path="/health" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="health" pageSize={pageSize} country="in" category="health" />}></Route>
-            <Route exact path="/science" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="science" pageSize={pageSize} country="in" category="science" />}></Route>
-            <Route exact path="/sports" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="sports" pageSize={pageSize} country="in" category="sports" />}></Route>
-            <Route exact path="/technology" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="technology" pageSize={pageSize} country="in" category="technology" />}></Route>
-            <Route exact path="/search" element={<News setProgress = {setProgress} apiKey = {apiKey} key="search" pageSize={pageSize} country="in" category="general" />}></Route>
+            <Route exact path="/" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="general" pageSize={pageSize} country="us" category="general" />}></Route>
+            <Route exact path="/business" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="business" pageSize={pageSize} country="us" category="business" />}></Route>
+            <Route exact path="/entertainment" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="entertainment" pageSize={pageSize} country="us" category="entertainment" />}></Route>
+            <Route exact path="/health" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="health" pageSize={pageSize} country="us" category="health" />}></Route>
+            <Route exact path="/science" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="science" pageSize={pageSize} country="us" category="science" />}></Route>
+            <Route exact path="/sports" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="sports" pageSize={pageSize} country="us" category="sports" />}></Route>
+            <Route exact path="/technology" element={<News setProgress = {setProgress} apiKey = {apiKey}   key="technology" pageSize={pageSize} country="us" category="technology" />}></Route>
+            <Route exact path="/search" element={<News setProgress = {setProgress} apiKey = {apiKey} key="search" pageSize={pageSize} country="us" category="general" />}></Route>
           </Routes>
         </Router>
       </div>

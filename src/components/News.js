@@ -27,14 +27,11 @@ const News = (props) => {
         setError(null);
         setIsFetching(true);
 
-        const url = searchQuery
-            ? `https://newsapi.org/v2/everything?q=${encodeURIComponent(searchQuery)}&language=en&pageSize=${props.pageSize}&page=${pageNumber}&apiKey=${props.apiKey}`
-            : `https://newsapi.org/v2/top-headlines?category=${props.category}&pageSize=${props.pageSize}&page=${pageNumber}&apiKey=${props.apiKey}`
+        const url = `/api/fetchNews?searchQuery=${encodeURIComponent(searchQuery)}&category=${props.category}&country=${props.country}&pageSize=${props.pageSize}&page=${pageNumber}`;
 
         try {
-            let data = await fetch(url);
             props.setProgress(30);
-            let parsedData = await data.json();
+            const parsedData = await fetchJson(url);
             props.setProgress(70);
 
             if (parsedData.status && parsedData.status === 'error') {
@@ -73,13 +70,10 @@ const News = (props) => {
         const nextPage = page + 1;
         setIsFetching(true);
 
-        const url = searchQuery
-            ? `https://newsapi.org/v2/everything?q=${encodeURIComponent(searchQuery)}&language=en&pageSize=${props.pageSize}&page=${nextPage}&apiKey=${props.apiKey}`
-            : `https://newsapi.org/v2/top-headlines?category=${props.category}&pageSize=${props.pageSize}&page=${nextPage}&apiKey=${props.apiKey}`
+        const url = `/api/fetchNews?searchQuery=${encodeURIComponent(searchQuery)}&category=${props.category}&country=${props.country}&pageSize=${props.pageSize}&page=${nextPage}`;
 
         try {
-            let data = await fetch(url);
-            let parsedData = await data.json();
+            const parsedData = await fetchJson(url);
 
             if (parsedData.status && parsedData.status === 'error') {
                 setError(parsedData.message || 'Failed to load more news.');
@@ -94,6 +88,20 @@ const News = (props) => {
             setIsFetching(false);
         }
     };
+
+    // helper: fetch and ensure response is JSON (avoid HTML index responses)
+    const fetchJson = async (url) => {
+        const res = await fetch(url, { credentials: 'same-origin' });
+        const contentType = res.headers.get('content-type') || '';
+        const text = contentType.includes('application/json') ? null : await res.text();
+
+        if (!contentType.includes('application/json')) {
+            throw new Error(`Expected JSON response but server returned HTML or plain text. First 200 chars: ${text ? text.slice(0, 200) : ''}`);
+        }
+
+        const json = await res.json();
+        return json;
+    }
 
     return (
         <>
