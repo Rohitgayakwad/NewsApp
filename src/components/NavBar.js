@@ -43,9 +43,11 @@ const NavBar = ()=> {
 
     return (
         <div>
-            <nav className="navbar fixed-top navbar-expand-lg" style={{ backgroundColor: "#6f42c1" }} data-bs-theme="light">
+            <nav className="navbar fixed-top navbar-expand-lg" style={{ backgroundColor: "rgb(190 165 235)" }} data-bs-theme="light">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/" onClick={closeNavbar} style={{ color: "white" }}>NewsWeb</Link>
+                    <Link className="navbar-brand" to="/" onClick={closeNavbar} style={{ color: "white" }}>
+                        <img className="navbar-logo" src="/NS_LOGO.png" alt="News Sphere Logo" />
+                    </Link>
                     <button ref={toggleRef} className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

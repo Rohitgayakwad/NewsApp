@@ -56,8 +56,8 @@ const News = (props) => {
 
     useEffect(() => {
         document.title = searchQuery
-            ? `NewsWeb - Search: ${capitalizeFirstLetter(searchQuery)}`
-            : `NewsWeb-${capitalizeFirstLetter(props.category)}`;
+            ? `NewsSphere - Search: ${capitalizeFirstLetter(searchQuery)}`
+            : `NewsSphere-${capitalizeFirstLetter(props.category)}`;
         setPage(1)
         updateNews(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,10 +105,10 @@ const News = (props) => {
 
     return (
         <>
-            <h1 className="text-center" style={{ margin: '30px 0px', marginTop: '90px' }}>
+            <h1 className="heading text-center" style={{ margin: '30px 12px', marginTop: '150px' }}>
                 {searchQuery
-                    ? `NewsWeb - Search results for "${capitalizeFirstLetter(searchQuery)}"`
-                    : `NewsWeb - Top ${capitalizeFirstLetter(props.category)} Headlines`}
+                    ? `NewsSphere - Search results for "${capitalizeFirstLetter(searchQuery)}"`
+                    : `NewsSphere - Top ${capitalizeFirstLetter(props.category)} Headlines`}
             </h1>
             
             {error && <div className="alert alert-danger text-center" role="alert">{error}</div>}

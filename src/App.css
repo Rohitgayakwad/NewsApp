@@ -28,6 +28,27 @@
   color: #61dafb;
 }
 
+
+/* Default height for large screens (992px and above) */
+.navbar-logo {
+  height: 100px;
+  transition: height 0.3s ease; /* Optional: smooth transition when resizing */
+}
+
+/* Responsive height for screens below 992px */
+@media (max-width: 991.98px) {
+  .navbar-logo {
+    height: 80px;
+  }
+}
+
+
+@media (min-width: 992px) {
+  h1.heading {
+    margin-top: 180px!important; /* Adjust this value as needed for larger screens */
+  }
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
